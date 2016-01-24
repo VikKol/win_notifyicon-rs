@@ -1,0 +1,11 @@
+[package]
+name = "win_notifyicon-rs"
+version = "0.1.0"
+authors = ["VikKol"]
+
+[dependencies]
+libc = "0.2.2"
+winapi = "0.2.5"
+user32-sys = "0.1.2"
+kernel32-sys = "0.2.1"
+lazy_static = "*"
