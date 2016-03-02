@@ -1,22 +1,25 @@
 extern crate winapi;
 extern crate user32;
 extern crate kernel32;
-
 use winapi::winnt::LPCWSTR;
 use winapi::windef::{HWND,HMENU,HBRUSH};
 use winapi::minwindef::{HINSTANCE,UINT,DWORD,WPARAM,LPARAM};
 use winapi::winuser::{WNDPROC,CW_USEDEFAULT,WS_OVERLAPPEDWINDOW,WS_VISIBLE,WNDCLASSW};
 use std::ptr::{null_mut};
-
 use helpers;
 
-pub fn create_background(title: &'static str, window_proc: WNDPROC) -> HWND {
+pub fn create_background(title: String, window_proc: WNDPROC) -> HWND {
     create_window(title, false, 0, 0, window_proc)
 }
 
-pub fn create_window(title: &'static str, visible: bool, width: i32, height: i32, window_proc: WNDPROC) -> HWND {
-    // Register class
-    let class_name = "window_".to_string() + title;
+pub fn create_window(
+    title: String,
+    visible: bool,
+    width: i32,
+    height: i32,
+    window_proc: WNDPROC)
+    -> HWND {
+    let class_name = "window_".to_string() + &title;
     let w_class_name = helpers::to_wstring(&class_name);
     let wnd = WNDCLASSW {
         style: 0,
