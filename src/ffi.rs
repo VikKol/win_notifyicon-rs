@@ -1,6 +1,6 @@
 extern crate winapi;
 extern crate user32;
-use winapi::winnt::{LPCSTR};
+use winapi::winnt::{LPCSTR,LPCWSTR};
 use winapi::minwindef::{UINT,BOOL};
 use winapi::windef::{HWND,HMENU,HICON,RECT};
 
@@ -20,15 +20,6 @@ pub const TPM_RIGHTBUTTON: u32 = 0x0002;
 
 #[repr(C)]
 #[allow(non_snake_case)]
-pub struct GUID {
-   pub a: i32,
-   pub b: i16,
-   pub c: i16,
-   pub d: [i8, 8]
-}
-
-#[repr(C)]
-#[allow(non_snake_case)]
 pub struct NOTIFYICONDATA {
     pub cbSize: i32,
     pub hWnd: HWND,
@@ -36,19 +27,20 @@ pub struct NOTIFYICONDATA {
     pub uFlags: u32,
     pub uCallbackMessage: u32,
     pub hIcon: HICON,
-    pub szTip: LPCSTR,
+    pub szTip: LPCWSTR,
     pub dwState: i32,
     pub dwStateMask: i32,
-    pub szInfo: LPCSTR,
+    pub szInfo: LPCWSTR,
     pub uVersion: u32,
-    pub szInfoTitle: LPCSTR,
+    pub szInfoTitle: LPCWSTR,
     pub dwInfoFlags: i32
 }
 
 #[allow(non_snake_case)]
 extern "system" {
-    pub fn CoCreateGuid(pguid: &mut GUID) -> HRESULT;
     pub fn Shell_NotifyIcon(dwMessage: u32, pnid: &mut NOTIFYICONDATA) -> BOOL;
+    pub fn Shell_NotifyIconA(dwMessage: u32, pnid: &mut NOTIFYICONDATA) -> BOOL;
+    pub fn Shell_NotifyIconW(dwMessage: u32, pnid: &mut NOTIFYICONDATA) -> BOOL;
     pub fn TrackPopupMenu(
         h_menu: HMENU,
         u_flags: UINT,
